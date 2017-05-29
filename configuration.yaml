@@ -1,0 +1,239 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: !secret elevation
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Vilnius
+  customize: !include customize.yaml
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret hass_api_password
+  # Uncomment this if you are using SSL or running in Docker etc
+  #base_url: namas.duckdns.org:8123
+  # ssl_certificate: '/etc/letsencrypt/live/namas.duckdns.org/fullchain.pem'
+  # ssl_key: '/etc/letsencrypt/live/namas.duckdns.org/privkey.pem'
+
+# Checks for available updates
+updater:
+
+# Discover some devices automatically
+discovery:
+
+ios:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+# conversation:
+
+# Enables support for tracking state changes over time.
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+# Weather Prediction
+sensor:
+  - platform: yr
+  - platform: wunderground
+    api_key: !secret wu_key
+    monitored_conditions:
+      - dewpoint_c
+      - temp_c
+      - relative_humidity
+      - pressure_mb
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_free
+      - type: processor_use
+  - platform: android_ip_webcam
+    resources:
+      - type: light
+      - type: pressure
+      - type: battery_temp
+  - platform: mqtt
+    state_topic: "sensor/hermesnode"
+    name: "Home Temperature"
+    unit_of_measurement: "°C"
+    value_template: '{{ value_json.temperature | round(1) }}'
+    force_update: true
+    icon: mdi:temperature-celsius
+
+  - platform: mqtt
+    state_topic: "sensor/hermesnode"
+    name: "Home Humidity"
+    unit_of_measurement: "%"
+    value_template: '{{ value_json.humidity | round(1) }}'
+    force_update: true
+    icon: mdi:water-percent
+
+  - platform: mqtt
+    state_topic: "sensor/hermesnode"
+    name: "Home Precise Temperature"
+    unit_of_measurement: "°C"
+    value_template: '{{ value_json.temp_precise | round(2) }}'
+    force_update: true
+    icon: mdi:temperature-celsius
+
+  - platform: mqtt
+    state_topic: "sensor/hermesnode"
+    name: "Home Pressure"
+    unit_of_measurement: "mbar"
+    value_template: '{{ value_json.pressure | round(2) }}'
+    force_update: true
+    icon: mdi:thermometer-lines
+
+# tts:
+#   platform: google
+
+group: !include groups.yaml
+
+media_player:
+  - platform: spotify
+    client_id: !secret spotify_client_id
+    client_secret: !secret spotify_client_secret
+  # - platform: kodi
+  #   host: omc.local
+  #   username: !secret kodi_username
+  #   password: !secret kodi_password
+mqtt:
+  broker: 127.0.0.1
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+light:
+  - platform: mqtt_json
+    name: "Porch Strip"
+    state_topic: "bruh/porch"
+    command_topic: "bruh/porch/set"
+    effect: true
+    effect_list:
+      - bpm
+      - candy cane
+      - confetti
+      - cyclon rainbow
+      - dots
+      - fire
+      - glitter
+      - juggle
+      - lightning
+      - noise
+      - police all
+      - police one
+      - rainbow
+      - rainbow with glitter
+      - ripple
+      - sinelon
+      - solid
+      - twinkle
+    brightness: true
+    flash: true
+    rgb: true
+    optimistic: false
+    qos: 0
+
+input_slider:
+  porch_animation_speed:
+    name: Porch Animation Speed
+    initial: 150
+    min: 1
+    max: 150
+    step: 10
+
+automation:
+  - alias: "Porch Animation Speed"
+    initial_state: True
+    hide_entity: False
+    trigger:
+      - platform: state
+        entity_id: input_slider.porch_animation_speed
+    action:
+      - service: mqtt.publish
+        data_template:
+          topic: "bruh/porch/set"
+          payload: '{"transition":{{ trigger.to_state.state | int }}}'
+
+android_ip_webcam:
+  - host: 192.168.0.107
+    name: hermes_cam
+    port: 8080
+    scan_interval: 3
+    sensors:
+      - light
+      - battery_temp
+      - battery_voltage
+    switches:
+      - video_recording
+      - torch
+      - night_vision
+      - ffc
+
+# Example configuration.yaml entry for nmap
+# One whole subnet, and skipping two specific IPs.
+device_tracker:
+  # - platform: ddwrt
+  #   host: 192.168.0.1
+  #   username: hermes
+  #   password: hermeshome
+  - platform: nmap_tracker
+    hosts: 192.168.0.1/24
+    home_interval: 10
+    exclude:
+     - 192.168.0.107
+     - 192.168.0.1
+     - 192.168.0.2
+zone:
+  name: Home
+  latitude: !secret latitude
+  longitude: !secret longitude
+  radius: 100
+  icon: mdi:account-multiple
+
+zone 1:
+  name: Work
+  latitude: !secret work_latitude
+  longitude: !secret work_longitude
+  radius: 100
+  icon: mdi:worker
+
+
+automation 1:
+  - alias: 'Loop back test'
+    trigger:
+      platform: time
+      # You can also match on interval. This will match every 5 minutes
+      minutes: '/1'
+      seconds: 00
+    action:
+      # Actions are scripts so can also be a list of actions
+      - service: notify.notify
+        data:
+          message: Beautiful sunset!
+
+weblink:
+  entities:
+    - name: transmission
+      url: http://omc.local:9091
+    - name: Kodi
+      url: http://omc.local:8080/
+    - name: HASS blog
+      url: https://home-assistant.io/blog/

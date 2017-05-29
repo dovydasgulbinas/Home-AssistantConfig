@@ -1,0 +1,29 @@
+weather_info_group:
+  name: Weather Info
+  entities:
+  - sensor.pws_temp_c
+  - sensor.home_temperature
+  - sensor.home_precise_temperature
+  - sensor.home_humidity
+  - sensor.pws_relative_humidity
+  - sensor.pws_pressure_mb
+  - sensor.home_pressure
+  - sensor.pws_dewpoint_c
+
+led_strip_group:
+  name: RGB Strip
+  entities:
+  - automation.porch_animation_speed
+  - light.porch_strip
+  - input_slider.porch_animation_speed
+weather_detailed_view:
+  name: Weather
+  view: true
+  entities:
+  - group.weather_info_group
+media_control_view:
+  name: Media
+  view: true
+  entities:
+  - media_player.kodi
+  - media_player.spotify
