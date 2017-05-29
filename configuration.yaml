@@ -50,57 +50,7 @@ logbook:
 sun:
 
 # Weather Prediction
-sensor:
-  - platform: yr
-  - platform: wunderground
-    api_key: !secret wu_key
-    monitored_conditions:
-      - dewpoint_c
-      - temp_c
-      - relative_humidity
-      - pressure_mb
-  - platform: systemmonitor
-    resources:
-      - type: disk_use_percent
-        arg: /home
-      - type: memory_free
-      - type: processor_use
-  - platform: android_ip_webcam
-    resources:
-      - type: light
-      - type: pressure
-      - type: battery_temp
-  - platform: mqtt
-    state_topic: "sensor/hermesnode"
-    name: "Home Temperature"
-    unit_of_measurement: "°C"
-    value_template: '{{ value_json.temperature | round(1) }}'
-    force_update: true
-    icon: mdi:temperature-celsius
-
-  - platform: mqtt
-    state_topic: "sensor/hermesnode"
-    name: "Home Humidity"
-    unit_of_measurement: "%"
-    value_template: '{{ value_json.humidity | round(1) }}'
-    force_update: true
-    icon: mdi:water-percent
-
-  - platform: mqtt
-    state_topic: "sensor/hermesnode"
-    name: "Home Precise Temperature"
-    unit_of_measurement: "°C"
-    value_template: '{{ value_json.temp_precise | round(2) }}'
-    force_update: true
-    icon: mdi:temperature-celsius
-
-  - platform: mqtt
-    state_topic: "sensor/hermesnode"
-    name: "Home Pressure"
-    unit_of_measurement: "mbar"
-    value_template: '{{ value_json.pressure | round(2) }}'
-    force_update: true
-    icon: mdi:thermometer-lines
+sensor: !include sensors.yaml
 
 # tts:
 #   platform: google
@@ -111,10 +61,10 @@ media_player:
   - platform: spotify
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret
-  # - platform: kodi
-  #   host: omc.local
-  #   username: !secret kodi_username
-  #   password: !secret kodi_password
+  - platform: kodi
+    host: omc.local
+    username: !secret kodi_username
+    password: !secret kodi_password
 mqtt:
   broker: 127.0.0.1
   username: !secret mqtt_username
