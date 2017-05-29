@@ -63,6 +63,10 @@ media_player:
     client_secret: !secret spotify_client_secret
   - platform: kodi
     host: omc.local
+    port: 8080
+    turn_off_action: reboot
+    enable_websocket: false
+    proxy_ssl: false
     username: !secret kodi_username
     password: !secret kodi_password
 mqtt:
