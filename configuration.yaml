@@ -19,15 +19,13 @@ homeassistant:
 frontend:
 
 # Enables configuration UI
+automation: !include automations.yaml
 config:
 
 http:
   # Uncomment this to add a password (recommended!)
   api_password: !secret hass_api_password
-  # Uncomment this if you are using SSL or running in Docker etc
-  #base_url: namas.duckdns.org:8123
-  # ssl_certificate: '/etc/letsencrypt/live/namas.duckdns.org/fullchain.pem'
-  # ssl_key: '/etc/letsencrypt/live/namas.duckdns.org/privkey.pem'
+  base_url: !secret hass_url
 
 # Checks for available updates
 updater:
@@ -65,8 +63,8 @@ media_player:
     host: omc.local
     port: 8080
     turn_off_action: reboot
-    enable_websocket: false
-    proxy_ssl: false
+    # enable_websocket: false
+    # proxy_ssl: false
     username: !secret kodi_username
     password: !secret kodi_password
 mqtt:
@@ -113,19 +111,6 @@ input_slider:
     max: 150
     step: 10
 
-automation:
-  - alias: "Porch Animation Speed"
-    initial_state: True
-    hide_entity: False
-    trigger:
-      - platform: state
-        entity_id: input_slider.porch_animation_speed
-    action:
-      - service: mqtt.publish
-        data_template:
-          topic: "bruh/porch/set"
-          payload: '{"transition":{{ trigger.to_state.state | int }}}'
-
 android_ip_webcam:
   - host: 192.168.0.107
     name: hermes_cam
@@ -141,8 +126,6 @@ android_ip_webcam:
       - night_vision
       - ffc
 
-# Example configuration.yaml entry for nmap
-# One whole subnet, and skipping two specific IPs.
 device_tracker:
   # - platform: ddwrt
   #   host: 192.168.0.1
@@ -169,19 +152,11 @@ zone 1:
   radius: 100
   icon: mdi:worker
 
-
-automation 1:
-  - alias: 'Loop back test'
-    trigger:
-      platform: time
-      # You can also match on interval. This will match every 5 minutes
-      minutes: '/1'
-      seconds: 00
-    action:
-      # Actions are scripts so can also be a list of actions
-      - service: notify.notify
-        data:
-          message: Beautiful sunset!
+input_boolean:
+  enable_night_music:
+    name: Night vibes
+    initial: off
+    icon: mdi:sleep
 
 weblink:
   entities:

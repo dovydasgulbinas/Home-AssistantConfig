@@ -1,0 +1,38 @@
+- id: loopback
+  alias: 'Loop back test'
+  trigger:
+    platform: time
+    # You can also match on interval. This will match every 5 minutes
+    minutes: '/1'
+    seconds: 00
+  action:
+    # Actions are scripts so can also be a list of actions
+    - service: notify.notify
+      data:
+        message: Beautiful sunset!
+
+- id: led_strip
+  alias: "TV Backlight"
+  initial_state: True
+  hide_entity: False
+  trigger:
+    - platform: state
+      entity_id: input_slider.porch_animation_speed
+  action:
+    - service: mqtt.publish
+      data_template:
+        topic: "bruh/porch/set"
+        payload: '{"transition":{{ trigger.to_state.state | int }}}'
+
+- id: good_night
+  alias: "Goodnight world"
+  trigger:
+    - platform: state
+      entity_id: input_boolean.enable_night_music
+      to: 'on'
+  action:
+    - service: media_player.play_media
+      data:
+        entity_id: media_player.kodi
+        media_content_id: "plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=Xud-J6IQmLI"
+        media_content_type: "video"
