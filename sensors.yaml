@@ -52,3 +52,5 @@
   value_template: '{{ value_json.pressure | round(2) }}'
   force_update: true
   icon: mdi:thermometer-lines
+
+- platform: example

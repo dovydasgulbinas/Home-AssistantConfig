@@ -163,6 +163,10 @@ weblink:
     - name: transmission
       url: http://omc.local:9091
     - name: Kodi
-      url: http://omc.local:8080/
+      url: httpV://omc.local:8080/
     - name: HASS blog
       url: https://home-assistant.io/blog/
+
+# hdmi_controller:
+switch:
+  - hdmi
