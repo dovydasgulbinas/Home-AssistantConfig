@@ -13,17 +13,18 @@ if [[ "$response" =~ ^(yes|y)$ ]]
 then
     echo "Restarting HASS"
     sudo systemctl restart home-assistant.service
+    tail -f home-assistant.log
 else
     echo "No Restart"
 fi
 
-read -r -p "Do you wish to read home assistant log? [y/N]" response
-response=${response,,}    # tolower
-if [[ "$response" =~ ^(yes|y)$ ]]
-then
-    tail -f home-assistant.log
-else
-    echo "No Log"
-fi
+# read -r -p "Do you wish to read home assistant log? [y/N]" response
+# response=${response,,}    # tolower
+# if [[ "$response" =~ ^(yes|y)$ ]]
+# then
+#     tail -f home-assistant.log
+# else
+#     echo "No Log"
+# fi
 
 exit

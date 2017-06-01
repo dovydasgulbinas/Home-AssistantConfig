@@ -168,5 +168,4 @@ weblink:
       url: https://home-assistant.io/blog/
 
 # hdmi_controller:
-switch:
-  - hdmi
+switch: !include switches.yaml

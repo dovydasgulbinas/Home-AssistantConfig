@@ -1,0 +1,7 @@
+- platform: transmission
+  name: Slowdown Transmission
+  host: omc.local
+  username: !secret transmission_username
+  password: !secret transmission_password
+
+- platform: hdmi

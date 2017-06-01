@@ -53,4 +53,13 @@
   force_update: true
   icon: mdi:thermometer-lines
 
+- platform: transmission
+  host: !secret transmission_host
+  username: !secret transmission_username
+  password: !secret transmission_password
+  monitored_variables:
+    - 'current_status'
+    - 'download_speed'
+    - 'upload_speed'
+
 - platform: example
