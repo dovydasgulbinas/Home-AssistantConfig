@@ -22,6 +22,11 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
     hdmi_devices = []
 
     state_pins = [12,20,21]
+    pull_down=True
+    # will initialize pins in input mode
+    # for pin in state_pins:
+    #     GPIO.setup(pin, GPIO.IN, GPIO.PUD_DOWN if pull_down else GPIO.PUD_UP)
+
 
     hdmi_devices.append(HDMISwitch(hass, config, 'HDMI Channel 1', GPIO, 0, state_pins))
     hdmi_devices.append(HDMISwitch(hass, config, 'HDMI Channel 2', GPIO, 1, state_pins))
@@ -65,7 +70,7 @@ class HDMISwitch(SwitchDevice):
 
     def turn_on(self):
         """Turn the switch on."""
-        self._switch_position()
+        self._activate_channel()
         self._state = True
         self.schedule_update_ha_state()
 
@@ -79,6 +84,7 @@ class HDMISwitch(SwitchDevice):
         """Set up the Raspberry PI GPIO component."""
         self._GPIO.setmode(self._GPIO.BCM)
         self._setup_output()
+        self._setup_input()
 
     def _write_output(self, value):
         """Write a value to a GPIO."""
@@ -86,8 +92,15 @@ class HDMISwitch(SwitchDevice):
 
     def _setup_output(self):
         """Set up a GPIO as output."""
+        # TODO: optimize to or export to a static method
         self._GPIO.setup(self._switching_pin, self._GPIO.OUT)
         self._write_output(self._falling_edge)
+
+    def _setup_input(self, pull_down=True):
+        self._GPIO.setup(self._state_pin, self._GPIO.IN, self._GPIO.PUD_DOWN if pull_down else self._GPIO.PUD_UP)
+
+    def _read_input(self, pin):
+        return self.GPIO.input(pin)
 
     def _switch_position(self):
         _LOGGER.debug(">>> Changing source")
@@ -96,3 +109,7 @@ class HDMISwitch(SwitchDevice):
         self._write_output(not self._falling_edge)
         time.sleep(0.05)
         self._write_output(self._falling_edge)
+
+    def _activate_channel():
+        # FIXME: add channel selector!
+        self._switch_position()
