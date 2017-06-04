@@ -180,12 +180,12 @@ input_boolean:
 
 weblink:
   entities:
-    - name: transmission
+    - name: Transmission
       url: http://omc.local:9091
+    - name: Sonarr
+      url: http://omc.local:8989
     - name: Kodi
       url: http://omc.local:8080/
-    - name: HASS blog
-      url: https://home-assistant.io/blog/
 
 switch: !include switches.yaml
 

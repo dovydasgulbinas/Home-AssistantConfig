@@ -37,5 +37,14 @@ sensor.home_humidity:
 sensor.home_pressure:
   icon: mdi:thermometer-lines
 
-switch.kodi_controll:
-  assumed_state: false
+media_player.kodi:
+  hidden: false
+
+media_player.spotify:
+  hidden: false
+
+group.transmission_item_group:
+  hidden: false
+
+group.hdmi_switch_group:
+  hidden: false
