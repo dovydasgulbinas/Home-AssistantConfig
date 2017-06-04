@@ -109,6 +109,20 @@ input_slider:
     min: 1
     max: 150
     step: 10
+  alarmhour:
+    name: Hour
+    icon: mdi:timer
+    initial: 7
+    min: 0
+    max: 23
+    step: 1
+  alarmminutes:
+    name: Minutes
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 59
+    step: 5
 
 android_ip_webcam:
   - host: 192.168.0.107
@@ -156,13 +170,20 @@ input_boolean:
     name: Night vibes
     initial: off
     icon: mdi:sleep
+  alarmweekday:
+    name: Active weekdays
+    initial: on
+    icon: mdi:calendar
+  alarmweekon:
+    name: Active weekends
+    initial: on
 
 weblink:
   entities:
     - name: transmission
       url: http://omc.local:9091
     - name: Kodi
-      url: httpV://omc.local:8080/
+      url: http://omc.local:8080/
     - name: HASS blog
       url: https://home-assistant.io/blog/
 

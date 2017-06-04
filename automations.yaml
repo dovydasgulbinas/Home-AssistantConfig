@@ -32,3 +32,54 @@
       media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=yhx3JIF7bGU
       media_content_type: video
     service: media_player.play_media
+- id: weekday_alarm
+  alias: Week day alarm automation
+  trigger:
+  - platform: time
+    minutes: /1
+    seconds: 0
+  condition:
+  - condition: state
+    entity_id: input_boolean.alarmweekon
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.alarmweekday
+    state: 'on'
+  - condition: time
+    weekday:
+    - mon
+    - tue
+    - wed
+    - thu
+    - fri
+  - condition: template
+    value_template: '{{ now().strftime("%H:%M") == states.sensor.alarm_time.state
+      }}'
+  action:
+  - data:
+      message: Hello jew
+    service: notify.notify
+- id: weekend_alarm
+  alias: Weekend alarm automation
+  trigger:
+  - minutes: /1
+    platform: time
+    seconds: 0
+  condition:
+  - condition: state
+    entity_id: input_boolean.alarmweekon
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.alarmweekday
+    state: 'off'
+  - condition: time
+    weekday:
+    - sat
+    - sun
+  - condition: template
+    value_template: '{{ now().strftime("%H:%M") == states.sensor.alarm_time.state
+      }}'
+  action:
+  - data:
+      message: Hello jew
+    service: notify.notify

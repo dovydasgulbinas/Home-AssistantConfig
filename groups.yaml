@@ -33,6 +33,15 @@ hdmi_switch_group:
   - switch.hdmi_channel_2
   - switch.hdmi_channel_3
 
+alarm_clock_group:
+  name: Wake Me Up
+  entities:
+    - sensor.alarm_time
+    - input_slider.alarmhour
+    - input_slider.alarmminutes
+    - input_boolean.alarmweekday
+    - input_boolean.alarmweekon
+
 media_control_view:
   name: Media
   view: yes
