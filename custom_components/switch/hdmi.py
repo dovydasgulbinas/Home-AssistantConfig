@@ -50,8 +50,10 @@ class HDMISwitch(SwitchDevice):
         self._state_pins = state_pins
         self._falling_edge = True
         self._GPIO=GPIO
-        self._init_gpio(hass, config)
         self._state_pin = state_pins[index]
+        self._init_gpio(hass, config)
+        self._n_swiches = len(state_pins)
+        self._write_output(self._falling_edge)
 
     @property
     def should_poll(self):
@@ -70,13 +72,16 @@ class HDMISwitch(SwitchDevice):
 
     def turn_on(self):
         """Turn the switch on."""
-        self._activate_channel()
+        self._write_output(not self._falling_edge)
         self._state = True
+
+        # self._state = self._activate_channel()
+        # self._write_output(self._falling_edge)
         self.schedule_update_ha_state()
 
     def turn_off(self):
         """Turn the switch off."""
-        self._write_output(True)
+        self._write_output(self._falling_edge)
         self._state = False
         self.schedule_update_ha_state()
 
@@ -100,16 +105,42 @@ class HDMISwitch(SwitchDevice):
         self._GPIO.setup(self._state_pin, self._GPIO.IN, self._GPIO.PUD_DOWN if pull_down else self._GPIO.PUD_UP)
 
     def _read_input(self, pin):
-        return self.GPIO.input(pin)
+        return self._GPIO.input(pin)
 
     def _switch_position(self):
-        _LOGGER.debug(">>> Changing source")
+        _LOGGER.error(">>> Changing source")
         self._write_output(self._falling_edge)
         time.sleep(0.05)
         self._write_output(not self._falling_edge)
         time.sleep(0.05)
         self._write_output(self._falling_edge)
 
-    def _activate_channel():
+    def _activate_channel(self):
         # FIXME: add channel selector!
-        self._switch_position()
+        initial_state = None
+
+        for pin in self._state_pins:
+            if self._read_input(pin):
+                initial_state = pin
+
+        if self._read_input(self._state_pin):
+            _LOGGER.info("Already on the selected channel")
+            self._state = True
+            return True
+
+        for i in range(1, self._n_swiches):
+            self._switch_position()
+            if self._read_input(self._state_pin):
+                return True
+            _LOGGER.error("Checked pin:{}".format(i))
+
+        _LOGGER.error("Could not change to seleced channel reverting to initial one")
+
+        if initial_state:
+            for i in range(0, self._n_swiches):
+                self._switch_position()
+                if self._read_input(initial_state):
+                    _LOGGER.info("Restored initial state")
+                    break
+        _LOGGER.info("Initial state was none doing nothing")
+        return False

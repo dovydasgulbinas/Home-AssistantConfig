@@ -169,3 +169,8 @@ weblink:
 
 # hdmi_controller:
 switch: !include switches.yaml
+
+logger:
+  default: warning
+  logs:
+    homeassistant.components.switch.hdmi: debug
