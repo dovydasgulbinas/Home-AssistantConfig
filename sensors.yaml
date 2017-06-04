@@ -62,4 +62,15 @@
     - 'download_speed'
     - 'upload_speed'
 
-- platform: example
+- platform: sonarr
+  api_key: !secret sonarr_api_key
+  host: !secret sonarr_host
+  port: 8989
+  monitored_conditions:
+    - diskspace
+    - wanted
+    - queue
+    - upcoming
+  days: 3
+
+- platform: dnsip

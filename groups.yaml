@@ -10,20 +10,34 @@ weather_info_group:
   - sensor.home_pressure
   - sensor.pws_dewpoint_c
 
+transmission_item_group:
+  name: Transmission
+  entities:
+  - weblink.transmission
+  - switch.slowdown_transmission
+  - sensor.transmission_status
+  - sensor.transmission_up_speed
+  - sensor.transmission_down_speed
+
 led_strip_group:
   name: RGB Strip
   entities:
   - automation.porch_animation_speed
   - light.porch_strip
   - input_slider.porch_animation_speed
-weather_detailed_view:
-  name: Weather
-  view: true
+
+hdmi_switch_group:
+  name: HDMI Selector
   entities:
-  - group.weather_info_group
+  - switch.hdmi_channel_1
+  - switch.hdmi_channel_2
+  - switch.hdmi_channel_3
+
 media_control_view:
   name: Media
-  view: true
+  view: yes
   entities:
   - media_player.kodi
   - media_player.spotify
+  - group.hdmi_switch_group
+  - group.transmission_item_group

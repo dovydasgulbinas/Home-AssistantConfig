@@ -53,7 +53,6 @@ sensor: !include sensors.yaml
 # tts:
 #   platform: google
 
-group: !include groups.yaml
 
 media_player:
   - platform: spotify
@@ -167,10 +166,11 @@ weblink:
     - name: HASS blog
       url: https://home-assistant.io/blog/
 
-# hdmi_controller:
 switch: !include switches.yaml
 
 logger:
   default: warning
   logs:
     homeassistant.components.switch.hdmi: debug
+
+group: !include groups.yaml
