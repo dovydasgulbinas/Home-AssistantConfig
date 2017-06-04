@@ -23,10 +23,6 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
 
     state_pins = [12,20,21]
     pull_down=True
-    # will initialize pins in input mode
-    # for pin in state_pins:
-    #     GPIO.setup(pin, GPIO.IN, GPIO.PUD_DOWN if pull_down else GPIO.PUD_UP)
-
 
     hdmi_devices.append(HDMISwitch(hass, config, 'HDMI Channel 1', GPIO, 0, state_pins))
     hdmi_devices.append(HDMISwitch(hass, config, 'HDMI Channel 2', GPIO, 1, state_pins))
@@ -40,13 +36,14 @@ def setup_platform(hass, config, add_devices, discovery_info=None):
 class HDMISwitch(SwitchDevice):
     """Representation of a GPIO RF switch."""
 
-    def __init__(self, hass, config, name, GPIO, index, state_pins):
+    def __init__(self, hass, config, name, GPIO, index, state_pins, switching_pin=16):
         """Initialize the switch."""
         self._hass = hass
         self._name = name
         self._state = False
         # TODO: Add proper pin resolustion
-        self._switching_pin = 16
+        self._index = index
+        self._switching_pin = switching_pin
         self._state_pins = state_pins
         self._falling_edge = True
         self._GPIO=GPIO
@@ -58,7 +55,7 @@ class HDMISwitch(SwitchDevice):
     @property
     def should_poll(self):
         """No polling needed."""
-        return False
+        return True
 
     @property
     def name(self):
@@ -68,15 +65,13 @@ class HDMISwitch(SwitchDevice):
     @property
     def is_on(self):
         """Return true if device is on."""
+        self._state = self._read_input(self._state_pin)
         return self._state
 
     def turn_on(self):
         """Turn the switch on."""
-        self._write_output(not self._falling_edge)
-        self._state = True
-
-        # self._state = self._activate_channel()
-        # self._write_output(self._falling_edge)
+        self._state = self._activate_channel()
+        self._write_output(self._falling_edge)
         self.schedule_update_ha_state()
 
     def turn_off(self):
@@ -108,7 +103,7 @@ class HDMISwitch(SwitchDevice):
         return self._GPIO.input(pin)
 
     def _switch_position(self):
-        _LOGGER.error(">>> Changing source")
+        _LOGGER.debug(">>> Changing source")
         self._write_output(self._falling_edge)
         time.sleep(0.05)
         self._write_output(not self._falling_edge)
@@ -116,15 +111,15 @@ class HDMISwitch(SwitchDevice):
         self._write_output(self._falling_edge)
 
     def _activate_channel(self):
-        # FIXME: add channel selector!
         initial_state = None
+        _LOGGER.debug("Activating channel: {}, index: {}".format(self._state_pin, self._index))
 
         for pin in self._state_pins:
             if self._read_input(pin):
                 initial_state = pin
 
         if self._read_input(self._state_pin):
-            _LOGGER.info("Already on the selected channel")
+            _LOGGER.debug("Already on the selected channel")
             self._state = True
             return True
 
@@ -132,15 +127,15 @@ class HDMISwitch(SwitchDevice):
             self._switch_position()
             if self._read_input(self._state_pin):
                 return True
-            _LOGGER.error("Checked pin:{}".format(i))
+            _LOGGER.debug("Checked pin:{}".format(i))
 
-        _LOGGER.error("Could not change to seleced channel reverting to initial one")
+        _LOGGER.debug("Could not change to seleced channel reverting to initial one")
 
         if initial_state:
             for i in range(0, self._n_swiches):
                 self._switch_position()
                 if self._read_input(initial_state):
-                    _LOGGER.info("Restored initial state")
+                    _LOGGER.warning("Restored initial state")
                     break
-        _LOGGER.info("Initial state was none doing nothing")
+        _LOGGER.warning("Initial state was none doing nothing")
         return False
