@@ -48,3 +48,6 @@ group.transmission_item_group:
 
 group.hdmi_switch_group:
   hidden: false
+
+switch.home_assistant_system_shutdown:
+  friendly_name: Reboot RPi

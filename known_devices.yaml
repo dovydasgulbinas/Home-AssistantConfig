@@ -42,7 +42,7 @@ hermes-mac:
 b827ebdd5c06:
   hide_if_away: false
   mac: B8:27:EB:DD:5C:06
-  name: b827ebdd5c06
-  picture:
+  name: TV
+  picture: http://www.iconarchive.com/download/i97934/flat-icons.com/flat/Flat-TV.ico
   track: true
   vendor: Raspberry Pi Foundation

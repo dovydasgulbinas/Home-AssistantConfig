@@ -5,3 +5,8 @@
   password: !secret transmission_password
 
 - platform: hdmi
+
+- platform: command_line
+  switches:
+    home_assistant_system_shutdown:
+      command_off: "/usr/bin/sudo /sbin/reboot"

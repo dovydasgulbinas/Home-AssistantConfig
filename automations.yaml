@@ -32,11 +32,16 @@
       media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=yhx3JIF7bGU
       media_content_type: video
     service: media_player.play_media
+  - alias: volume down kodi
+    data:
+      entity_id: media_player.kodi
+      volume_level: '0.3'
+    service: media_player.volume_set
 - id: weekday_alarm
   alias: Week day alarm automation
   trigger:
-  - platform: time
-    minutes: /1
+  - minutes: /1
+    platform: time
     seconds: 0
   condition:
   - condition: state
@@ -57,8 +62,19 @@
       }}'
   action:
   - data:
-      message: Hello jew
+      message: Good morning!
     service: notify.notify
+  - alias: Play rain
+    data:
+      entity_id: media_player.kodi
+      media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=x1Nx-tmuHNY
+      media_content_type: video
+    service: media_player.play_media
+  - alias: Volume up kodi
+    data:
+      entity_id: media_player.kodi
+      volume_level: '1.0'
+    service: media_player.volume_set
 - id: weekend_alarm
   alias: Weekend alarm automation
   trigger:
@@ -81,5 +97,11 @@
       }}'
   action:
   - data:
-      message: Hello jew
+      message: Good morning!
     service: notify.notify
+  - alias: Play kodi
+    data:
+      entity_id: media_player.kodi
+      media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=yhx3JIF7bGU
+      media_content_type: video
+    service: media_player.play_media

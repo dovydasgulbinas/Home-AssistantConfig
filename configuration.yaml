@@ -53,6 +53,7 @@ sensor: !include sensors.yaml
 # tts:
 #   platform: google
 
+scene: !include scenes.yaml
 
 media_player:
   - platform: spotify

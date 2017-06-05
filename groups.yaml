@@ -67,6 +67,7 @@ rpi_info_group:
     - sensor.cpu_use
     - sensor.ram_free
     - sensor.disk_use_home
+    - switch.home_assistant_system_shutdown
 
 media_control_view:
   name: Media
