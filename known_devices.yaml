@@ -46,3 +46,19 @@ b827ebdd5c06:
   picture: http://www.iconarchive.com/download/i97934/flat-icons.com/flat/Flat-TV.ico
   track: true
   vendor: Raspberry Pi Foundation
+
+5ccf7fb31864:
+  hide_if_away: false
+  mac: 5C:CF:7F:B3:18:64
+  name: 5ccf7fb31864
+  picture:
+  track: true
+  vendor: Espressif Inc.
+
+88074bb49c64:
+  hide_if_away: false
+  mac: 88:07:4B:B4:9C:64
+  name: 88074bb49c64
+  picture:
+  track: true
+  vendor: LG Electronics (Mobile Communications)

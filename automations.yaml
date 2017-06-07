@@ -1,13 +1,10 @@
 - id: loopback
   alias: Loop back test
   trigger:
+  - minutes: /1
     platform: time
-    minutes: /1
     seconds: 0
-  action:
-  - service: notify.notify
-    data:
-      message: Beautiful sunset!
+  action: []
 - id: led_strip
   alias: TV Backlight
   initial_state: true
@@ -37,6 +34,11 @@
       entity_id: media_player.kodi
       volume_level: '0.3'
     service: media_player.volume_set
+  - alias: night light
+    data:
+      entity_id: light.my_light
+      transition: 5
+    service: light.turn_off
 - id: weekday_alarm
   alias: Week day alarm automation
   trigger:
@@ -64,17 +66,18 @@
   - data:
       message: Good morning!
     service: notify.notify
-  - alias: Play rain
-    data:
-      entity_id: media_player.kodi
-      media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=x1Nx-tmuHNY
-      media_content_type: video
-    service: media_player.play_media
-  - alias: Volume up kodi
+  - alias: Volume UP kodi
     data:
       entity_id: media_player.kodi
       volume_level: '1.0'
     service: media_player.volume_set
+  - alias: PLAY lrt
+    data:
+      entity_id: media_player.kodi
+      item:
+        channelid: 2
+      method: Player.Open
+    service: media_player.kodi_call_method
 - id: weekend_alarm
   alias: Weekend alarm automation
   trigger:
@@ -99,9 +102,14 @@
   - data:
       message: Good morning!
     service: notify.notify
-  - alias: Play kodi
+  - alias: Play rain
     data:
       entity_id: media_player.kodi
-      media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=yhx3JIF7bGU
+      media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=x1Nx-tmuHNY
       media_content_type: video
     service: media_player.play_media
+  - alias: Volume up kodi
+    data:
+      entity_id: media_player.kodi
+      volume_level: '1.0'
+    service: media_player.volume_set

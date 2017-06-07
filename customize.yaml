@@ -25,6 +25,12 @@ input_slider.porch_animation_speed:
 automation.porch_animation_speed:
   hidden: true
 
+automation.tv_backlight:
+  hidden: true
+
+automation.loop_back_test:
+  hidden: true
+
 sensor.home_precise_temperature:
   icon: mdi:temperature-celsius
 

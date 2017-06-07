@@ -103,6 +103,20 @@ light:
     optimistic: false
     qos: 0
 
+  - platform: mqtt_json
+    name: "My Light"
+    state_topic: "AiLight-B31864"
+    command_topic: "AiLight-B31864/set"
+    effect: false
+    brightness: true
+    color_temp: true
+    flash: true
+    rgb: true
+    white_value: true
+    xy: true
+    optimistic: false
+    qos: 0
+
 input_slider:
   porch_animation_speed:
     name: Porch Animation Speed

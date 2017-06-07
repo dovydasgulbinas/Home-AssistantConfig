@@ -24,6 +24,7 @@ transmission_item_group:
   - sensor.sonarr_upcoming
   - sensor.sonarr_queue
   - sensor.sonarr_wanted
+  - weblink.kodi
 
 led_strip_group:
   name: RGB Strip
@@ -47,6 +48,9 @@ alarm_clock_group:
     - input_slider.alarmminutes
     - input_boolean.alarmweekday
     - input_boolean.alarmweekon
+    - automation.goodnight_world
+    - automation.week_day_alarm_automation
+    - automation.weekend_alarm_automation
 
 android_camera_group:
   name: IP Camera
@@ -64,6 +68,7 @@ rpi_info_group:
   name: Raspberry Info
   entities:
     - sensor.myipopendnscom
+    - sensor.cpuspeed
     - sensor.cpu_use
     - sensor.ram_free
     - sensor.disk_use_home
@@ -73,7 +78,6 @@ media_control_view:
   name: Media
   view: yes
   entities:
-  - weblink.kodi
   - media_player.kodi
   - media_player.spotify
   - group.hdmi_switch_group
