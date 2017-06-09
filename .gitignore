@@ -42,3 +42,4 @@ html5_push_registrations.conf
 ip_bans.yaml
 /icloud/*
 ios.conf
+config.json

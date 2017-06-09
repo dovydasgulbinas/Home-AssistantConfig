@@ -62,3 +62,19 @@ b827ebdd5c06:
   picture:
   track: true
   vendor: LG Electronics (Mobile Communications)
+
+f4e3fb12ea2a:
+  hide_if_away: false
+  mac: F4:E3:FB:12:EA:2A
+  name: f4e3fb12ea2a
+  picture:
+  track: true
+  vendor: HUAWEI TECHNOLOGIES CO.,LTD
+
+5ccf7ff9817d:
+  hide_if_away: false
+  mac: 5C:CF:7F:F9:81:7D
+  name: 5ccf7ff9817d
+  picture:
+  track: true
+  vendor: Espressif Inc.

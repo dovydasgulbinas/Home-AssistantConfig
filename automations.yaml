@@ -17,28 +17,17 @@
     data_template:
       topic: bruh/porch/set
       payload: '{"transition":{{ trigger.to_state.state | int }}}'
-- id: good_night
+- id: good_night_auto
   alias: Goodnight world
   trigger:
   - entity_id: input_boolean.enable_night_music
     platform: state
     to: 'on'
   action:
-  - data:
-      entity_id: media_player.kodi
-      media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=yhx3JIF7bGU
-      media_content_type: video
-    service: media_player.play_media
-  - alias: volume down kodi
-    data:
-      entity_id: media_player.kodi
-      volume_level: '0.3'
-    service: media_player.volume_set
-  - alias: night light
-    data:
-      entity_id: light.my_light
-      transition: 5
-    service: light.turn_off
+    - service: script.turn_on
+      data:
+        entity_id: script.good_night
+
 - id: weekday_alarm
   alias: Week day alarm automation
   trigger:

@@ -1,0 +1,63 @@
+wakeup:
+  alias: Wake Up
+  sequence:
+    - alias: Notify me
+      service: notify.notify
+      data:
+        message: Good morning!
+
+    # - delay:
+    #     # supports seconds, milliseconds, minutes, hours
+    #     minutes: 1
+
+    - alias: Turn on Socket
+      service: switch.turn_on
+      data:
+        entity_id: switch.strip_cord
+
+    - alias: Volume UP kodi
+      service: media_player.volume_set
+      data:
+        entity_id: media_player.kodi
+        volume_level: '1.0'
+
+    - alias: Start LRT
+      service: media_player.kodi_call_method
+      data:
+        entity_id: media_player.kodi
+        item:
+          channelid: 2
+        method: Player.Open
+
+good_night:
+  alias: Good Night!
+  sequence:
+    
+    - alias: Notify me
+      service: notify.notify
+      data:
+        message: Good Night!
+
+    - alias: Play rain
+      data:
+        entity_id: media_player.kodi
+        media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=yhx3JIF7bGU
+        media_content_type: video
+      service: media_player.play_media
+
+    - alias: volume down kodi
+      data:
+        entity_id: media_player.kodi
+        volume_level: '0.3'
+      service: media_player.volume_set
+
+    - alias: night light
+      data:
+        entity_id: light.my_light
+        transition: 15
+      service: light.turn_off
+
+    - alias: kill monitor
+      data:
+        entity_id: switch.strip_cord
+      service: switch.turn_off

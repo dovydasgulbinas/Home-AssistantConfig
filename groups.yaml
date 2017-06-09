@@ -39,6 +39,7 @@ hdmi_switch_group:
   - switch.hdmi_channel_1
   - switch.hdmi_channel_2
   - switch.hdmi_channel_3
+  - switch.strip_cord
 
 alarm_clock_group:
   name: Alarm Clock
@@ -68,11 +69,20 @@ rpi_info_group:
   name: Raspberry Info
   entities:
     - sensor.myipopendnscom
-    - sensor.cpuspeed
+    - sensor.cpu_speed
     - sensor.cpu_use
     - sensor.ram_free
     - sensor.disk_use_home
     - switch.home_assistant_system_shutdown
+
+daily_drivers:
+  name: Favourites
+  entities:
+    - light.my_light
+    - switch.strip_cord
+    - script.wakeup
+    - script.good_night
+    - input_boolean.enable_night_music
 
 media_control_view:
   name: Media
