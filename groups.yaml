@@ -10,7 +10,6 @@ weather_info_group:
   - sensor.pws_pressure_mb
   - sensor.home_pressure
   - sensor.pws_dewpoint_c
-
 transmission_item_group:
   name: Transmission & Sonarr
   entities:
@@ -25,14 +24,12 @@ transmission_item_group:
   - sensor.sonarr_queue
   - sensor.sonarr_wanted
   - weblink.kodi
-
 led_strip_group:
   name: RGB Strip
   entities:
   - automation.porch_animation_speed
   - light.porch_strip
   - input_slider.porch_animation_speed
-
 hdmi_switch_group:
   name: HDMI Selector
   entities:
@@ -40,55 +37,53 @@ hdmi_switch_group:
   - switch.hdmi_channel_2
   - switch.hdmi_channel_3
   - switch.strip_cord
-
 alarm_clock_group:
   name: Alarm Clock
   entities:
-    - sensor.alarm_time
-    - input_slider.alarmhour
-    - input_slider.alarmminutes
-    - input_boolean.alarmweekday
-    - input_boolean.alarmweekon
-    - automation.goodnight_world
-    - automation.week_day_alarm_automation
-    - automation.weekend_alarm_automation
-
+  - sensor.alarm_time
+  - input_slider.alarmhour
+  - input_slider.alarmminutes
+  - input_boolean.alarmweekday
+  - input_boolean.alarmweekon
+  view: true
 android_camera_group:
   name: IP Camera
   entities:
-    - camera.hermes_cam
-    - sensor.hermes_cam_light_level
-    - sensor.hermes_cam_battery_temperature
-    - sensor.hermes_cam_battery_voltage
-    - switch.hermes_cam_frontfacing_camera
-    - switch.hermes_cam_night_vision
-    - switch.hermes_cam_torch
-    - switch.hermes_cam_video_recording
-
+  - camera.hermes_cam
+  - sensor.hermes_cam_light_level
+  - sensor.hermes_cam_battery_temperature
+  - sensor.hermes_cam_battery_voltage
+  - switch.hermes_cam_frontfacing_camera
+  - switch.hermes_cam_night_vision
+  - switch.hermes_cam_torch
+  - switch.hermes_cam_video_recording
 rpi_info_group:
   name: Raspberry Info
   entities:
-    - sensor.myipopendnscom
-    - sensor.cpu_speed
-    - sensor.cpu_use
-    - sensor.ram_free
-    - sensor.disk_use_home
-    - switch.home_assistant_system_shutdown
-
+  - sensor.myipopendnscom
+  - sensor.cpu_speed
+  - sensor.cpu_use
+  - sensor.ram_free
+  - sensor.disk_use_home
+  - switch.home_assistant_system_shutdown
 daily_drivers:
   name: Favourites
   entities:
-    - light.my_light
-    - switch.strip_cord
-    - script.wakeup
-    - script.good_night
-    - input_boolean.enable_night_music
-
+  - light.my_light
+  - switch.strip_cord
+  - script.wakeup
+  - script.leaving_home
+  - script.welcome_home
+  - script.good_night
 media_control_view:
   name: Media
-  view: yes
+  view: true
   entities:
   - media_player.kodi
   - media_player.spotify
   - group.hdmi_switch_group
   - group.transmission_item_group
+quote:
+  name: Fortune
+  entities:
+  - sensor.quote

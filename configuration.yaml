@@ -178,18 +178,8 @@ zone 1:
   radius: 100
   icon: mdi:worker
 
-input_boolean:
-  enable_night_music:
-    name: Night vibes
-    initial: off
-    icon: mdi:sleep
-  alarmweekday:
-    name: Active weekdays
-    initial: on
-    icon: mdi:calendar
-  alarmweekon:
-    name: Active weekends
-    initial: on
+input_boolean: !include input_booleans.yaml
+
 
 weblink:
   entities:
@@ -216,3 +206,13 @@ rss_feed_template:
       description: "Home temp: {% if is_state('sensor.pws_relative_humidity','unknown') %}---{% else %}{{states.sensor.home_precise_temperature.state}} °C{% endif %}"
 
 group: !include groups.yaml
+
+input_select:
+  lullaby:
+    name: Lullaby
+    options:
+      - Rain
+      - Babbling Brook
+      - None
+    initial: None
+    icon: mdi:weather-rainy

@@ -58,5 +58,8 @@ group.hdmi_switch_group:
 switch.home_assistant_system_shutdown:
   friendly_name: Reboot RPi
 
+sensor.quote:
+  friendly_name: Fortune
+
 # switch.strip_cord:
 #   icon: mdi:

@@ -5,6 +5,7 @@
     platform: time
     seconds: 0
   action: []
+
 - id: led_strip
   alias: TV Backlight
   initial_state: true
@@ -17,16 +18,6 @@
     data_template:
       topic: bruh/porch/set
       payload: '{"transition":{{ trigger.to_state.state | int }}}'
-- id: good_night_auto
-  alias: Goodnight world
-  trigger:
-  - entity_id: input_boolean.enable_night_music
-    platform: state
-    to: 'on'
-  action:
-    - service: script.turn_on
-      data:
-        entity_id: script.good_night
 
 - id: weekday_alarm
   alias: Week day alarm automation
@@ -102,3 +93,49 @@
       entity_id: media_player.kodi
       volume_level: '1.0'
     service: media_player.volume_set
+
+# Homekit scenes
+
+- id: good_morning
+  alias: Good Morning Automation
+  trigger:
+  - entity_id: input_boolean.good_morning
+    platform: state
+    to: 'on'
+  action:
+    - service: script.turn_on
+      data:
+        entity_id: script.wakeup
+
+- id: leave_home
+  alias: Leave Home Automation
+  trigger:
+  - entity_id: input_boolean.leave_home
+    platform: state
+    to: 'on'
+  action:
+    - service: script.turn_on
+      data:
+        entity_id: script.leaving_home
+
+- id: arrive_home
+  alias: Arrive Home Automation
+  trigger:
+  - entity_id: input_boolean.arrive_home
+    platform: state
+    to: 'on'
+  action:
+    - service: script.turn_on
+      data:
+        entity_id: script.welcome_home
+
+- id: good_night_auto
+  alias: Goodnight world
+  trigger:
+  - entity_id: input_boolean.enable_night_music
+    platform: state
+    to: 'on'
+  action:
+    - service: script.turn_on
+      data:
+        entity_id: script.good_night

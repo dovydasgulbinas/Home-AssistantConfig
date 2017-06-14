@@ -71,7 +71,7 @@
     - wanted
     - queue
     - upcoming
-  days: 3
+  days: 2
 
 - platform: dnsip
 - platform: cpuspeed
@@ -81,3 +81,8 @@
     alarm_time:
       friendly_name: 'Time'
       value_template: '{{ "%0.02d:%0.02d" | format(states("input_slider.alarmhour") | int, states("input_slider.alarmminutes") | int) }}'
+
+- platform: command_line
+  name: quote
+  command: /usr/games/fortune
+  scan_interval: 600
