@@ -115,9 +115,12 @@ light:
     flash: true
     rgb: true
     white_value: true
-    xy: true
+    xy: false
     optimistic: false
     qos: 0
+
+  - platform: hyperion
+    host: omc.local
 
 input_slider:
   porch_animation_speed:
@@ -164,6 +167,9 @@ device_tracker:
      - 192.168.0.107
      - 192.168.0.1
      - 192.168.0.2
+     - 192.168.0.3
+     - 192.168.0.4
+     - 192.168.0.103
 zone:
   name: Home
   latitude: !secret latitude
@@ -197,22 +203,22 @@ logger:
   logs:
     homeassistant.components.switch.hdmi: debug
 
-rss_feed_template:
-  hass:
-    requires_api_password: False
-    title: "Home {{ as_timestamp(now())|timestamp_custom('%H:%m', True) }}"
-    items:
-    - title: "Weather"
-      description: "Home temp: {% if is_state('sensor.pws_relative_humidity','unknown') %}---{% else %}{{states.sensor.home_precise_temperature.state}} °C{% endif %}"
+# rss_feed_template:
+#   hass:
+#     requires_api_password: False
+#     title: "Home {{ as_timestamp(now())|timestamp_custom('%H:%m', True) }}"
+#     items:
+#     - title: "Weather"
+#       description: "Home temp: {% if is_state('sensor.pws_relative_humidity','unknown') %}---{% else %}{{states.sensor.home_precise_temperature.state}} °C{% endif %}"
 
 group: !include groups.yaml
 
-input_select:
-  lullaby:
-    name: Lullaby
-    options:
-      - Rain
-      - Babbling Brook
-      - None
-    initial: None
-    icon: mdi:weather-rainy
+# input_select:
+#   lullaby:
+#     name: Lullaby
+#     options:
+#       - Rain
+#       - Babbling Brook
+#       - None
+#     initial: None
+#     icon: mdi:weather-rainy

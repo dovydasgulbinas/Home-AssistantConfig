@@ -40,11 +40,17 @@ hdmi_switch_group:
 alarm_clock_group:
   name: Alarm Clock
   entities:
-  - sensor.alarm_time
+  # - sensor.alarm_time
   - input_slider.alarmhour
   - input_slider.alarmminutes
   - input_boolean.alarmweekday
   - input_boolean.alarmweekon
+  # view: true
+alarm_clowck_view:
+  name: Alarm Clock
+  entities:
+    - sensor.alarm_time
+    - group.alarm_clock_group
   view: true
 android_camera_group:
   name: IP Camera
@@ -70,11 +76,8 @@ daily_drivers:
   name: Favourites
   entities:
   - light.my_light
+  - light.omc
   - switch.strip_cord
-  - script.wakeup
-  - script.leaving_home
-  - script.welcome_home
-  - script.good_night
 media_control_view:
   name: Media
   view: true

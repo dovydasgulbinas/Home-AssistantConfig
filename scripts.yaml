@@ -54,7 +54,7 @@ good_night:
     - alias: night light
       data:
         entity_id: light.my_light
-        transition: 15
+        transition: 5
       service: light.turn_off
 
     - alias: kill monitor
@@ -77,6 +77,11 @@ leaving_home:
         transition: 2
       service: light.turn_off
 
+    - alias: Pause kodi
+      data:
+        entity_id: media_player.kodi
+      service: media_player.media_pause
+
     - alias: kill monitor
       data:
         entity_id: switch.strip_cord
@@ -98,19 +103,21 @@ welcome_home:
     #     media_content_type: video
     #   service: media_player.play_media
 
-    - alias: volume down kodi
-      data:
-        entity_id: media_player.kodi
-        volume_level: '0.8'
-      service: media_player.volume_set
-
-    # - alias: night light
+    # - alias: volume down kodi
     #   data:
-    #     entity_id: light.my_light
-    #     transition: 15
-    #   service: light.turn_on
+    #     entity_id: media_player.kodi
+    #     volume_level: '0.8'
+    #   service: media_player.volume_set
 
     - alias: turn monitor on
       data:
         entity_id: switch.strip_cord
       service: switch.turn_on
+
+    - delay:
+        seconds: 20
+
+    - alias:  Unpause kodi
+      service: media_player.media_play
+      data:
+        entity_id: media_player.kodi

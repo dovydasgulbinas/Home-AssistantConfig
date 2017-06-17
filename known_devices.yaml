@@ -1,80 +1,59 @@
-
 hermes-mobile:
-  hide_if_away: false
+  hide_if_away: true
   mac: 48:4B:AA:5B:5E:DF
-  name: Dovydo iPhone
+  name: Dovydas
   gravatar: dovydasgulbinas@gmail.com
   track: true
   vendor: Apple, Inc.
 
 hermes-mac:
-  hide_if_away: false
+  hide_if_away: true
   mac: 18:65:90:D4:60:3D
   name: Dovydo Mac
   picture: https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/500px-Apple_logo_black.svg.png
-  track: true
+  track: false
   vendor: Apple, Inc.
 
-18fe34d89eed:
+88074bb49c64:
   hide_if_away: false
-  mac: 18:FE:34:D8:9E:ED
-  name: 18fe34d89eed
+  mac: 88:07:4B:B4:9C:64
+  name: ???
+  picture:
+  track: true
+  vendor: LG Electronics (Mobile Communications)
+
+5ccf7ff9817d:
+  hide_if_away: false
+  icon:
+  mac: 5C:CF:7F:F9:81:7D
+  name: 5ccf7ff9817d
   picture:
   track: false
   vendor: Espressif Inc.
 
-2469a5ea7309:
+5ccf7fb31864:
   hide_if_away: false
-  mac: 24:69:A5:EA:73:09
-  name: 2469a5ea7309
+  icon:
+  mac: 5C:CF:7F:B3:18:64
+  name: 5ccf7fb31864
   picture:
   track: false
-  vendor: HUAWEI TECHNOLOGIES CO.,LTD
+  vendor: Espressif Inc.
+
+28d244489f5f:
+  hide_if_away: false
+  icon:
+  mac: 28:D2:44:48:9F:5F
+  name: 28d244489f5f
+  picture:
+  track: false
+  vendor: LCFC(HeFei) Electronics Technology Co., Ltd.
 
 00c2c612a606:
   hide_if_away: false
+  icon:
   mac: 00:C2:C6:12:A6:06
   name: 00c2c612a606
   picture:
   track: false
   vendor: Intel Corporate
-
-b827ebdd5c06:
-  hide_if_away: false
-  mac: B8:27:EB:DD:5C:06
-  name: TV
-  picture: http://www.iconarchive.com/download/i97934/flat-icons.com/flat/Flat-TV.ico
-  track: true
-  vendor: Raspberry Pi Foundation
-
-5ccf7fb31864:
-  hide_if_away: false
-  mac: 5C:CF:7F:B3:18:64
-  name: 5ccf7fb31864
-  picture:
-  track: true
-  vendor: Espressif Inc.
-
-88074bb49c64:
-  hide_if_away: false
-  mac: 88:07:4B:B4:9C:64
-  name: 88074bb49c64
-  picture:
-  track: true
-  vendor: LG Electronics (Mobile Communications)
-
-f4e3fb12ea2a:
-  hide_if_away: false
-  mac: F4:E3:FB:12:EA:2A
-  name: f4e3fb12ea2a
-  picture:
-  track: true
-  vendor: HUAWEI TECHNOLOGIES CO.,LTD
-
-5ccf7ff9817d:
-  hide_if_away: false
-  mac: 5C:CF:7F:F9:81:7D
-  name: 5ccf7ff9817d
-  picture:
-  track: true
-  vendor: Espressif Inc.

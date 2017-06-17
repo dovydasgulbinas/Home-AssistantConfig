@@ -61,5 +61,38 @@ switch.home_assistant_system_shutdown:
 sensor.quote:
   friendly_name: Fortune
 
-# switch.strip_cord:
-#   icon: mdi:
+scene.room_normal:
+  icon: mdi:lightbulb-on-outline
+
+scene.room_dim:
+  icon: mdi:lightbulb
+
+scene.good_morning:
+  icon: mdi:weather-sunset-up
+
+scene.leave_home:
+  icon: mdi:logout-variant
+
+scene.arrive_home:
+  icon: mdi:login-variant
+
+scene.good_night:
+  icon: mdi:sleep
+
+switch.strip_cord:
+  icon: mdi:power-plug
+
+script.wakeup:
+  hidden: true
+
+script.leaving_home:
+  hidden: true
+
+script.welcome_home:
+  hidden: true
+
+script.good_night:
+  hidden: true
+
+light.omc:
+  friendly_name: Backlight
