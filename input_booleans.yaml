@@ -7,6 +7,10 @@ alarmweekon:
   name: Active weekends
   initial: on
 
+# activate_hyperion_effect:
+#   name: Run Effect
+#   initial: off
+
 
 
 # Homekit Scenes

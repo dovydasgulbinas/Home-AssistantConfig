@@ -83,9 +83,15 @@
       friendly_name: 'Alarm Time'
       value_template: '{{ "%0.02d:%0.02d" | format(states("input_slider.alarmhour") | int, states("input_slider.alarmminutes") | int) }}'
 
+- platform: template
+  sensors:
+    current_time:
+      friendly_name: 'Time'
+      value_template: '{{now().strftime("%H:%M")}}'
+
 # - platform: template
 
 - platform: command_line
   name: quote
   command: /usr/games/fortune
-  scan_interval: 600
+  scan_interval: 3600

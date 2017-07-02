@@ -1,10 +1,21 @@
 wakeup:
   alias: Wake Up
   sequence:
+
     - alias: Notify me
       service: notify.notify
       data:
         message: Good morning!
+
+    - alias: Enable light dimming
+      service: automation.turn_on
+      data:
+        entity_id: automation.media_player_pausedstopped
+
+    - alias: Enable dim light on playing
+      service: automation.turn_on
+      data:
+        entity_id: automation.media_player_playing
 
     # - delay:
     #     # supports seconds, milliseconds, minutes, hours
@@ -37,6 +48,21 @@ good_night:
       service: notify.notify
       data:
         message: Good Night!
+
+    - alias: Disable light dimming
+      service: automation.turn_off
+      data:
+        entity_id: automation.media_player_pausedstopped
+
+    - alias: Disable dim light on playing
+      service: automation.turn_off
+      data:
+        entity_id: automation.media_player_playing
+
+    - alias: Disable hyperion service
+      service: switch.turn_off
+      data:
+        entity_id: switch.hyperion_service
 
     - alias: Play rain
       data:
@@ -90,11 +116,25 @@ leaving_home:
 welcome_home:
   alias: Back at home!
   sequence:
-
     - alias: Notify me
       service: notify.notify
       data:
         message: Welcome back home!
+
+hyperion_run:
+  alias: Run Hyperion Effect
+  sequence:
+    - alias: Run selected effect
+      service: shell_command.run_hyperion_effect
+      # data:
+      #   message: Welcome back home!
+
+# enable_hyperion_effect:
+#   sequence:
+#     - service: notify.pushover
+#       data_template:
+#         title: "{{ title }}"
+#         message: "{{ message }}"
 
     # - alias: Play rain
     #   data:
@@ -116,6 +156,8 @@ welcome_home:
 
     - delay:
         seconds: 20
+
+    # TODO: Add a question if media should be played
 
     - alias:  Unpause kodi
       service: media_player.media_play

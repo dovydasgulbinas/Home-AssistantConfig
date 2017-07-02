@@ -15,7 +15,7 @@ hermes-mac:
   vendor: Apple, Inc.
 
 88074bb49c64:
-  hide_if_away: false
+  hide_if_away: true
   mac: 88:07:4B:B4:9C:64
   name: ???
   picture:
@@ -57,3 +57,12 @@ hermes-mac:
   picture:
   track: false
   vendor: Intel Corporate
+
+2469a5ea7309:
+  hide_if_away: false
+  icon:
+  mac: 24:69:A5:EA:73:09
+  name: 2469a5ea7309
+  picture:
+  track: true
+  vendor: HUAWEI TECHNOLOGIES CO.,LTD

@@ -19,3 +19,12 @@
   payload_on: "ON"
   payload_off: "OFF"
   retain: true
+
+- platform: command_line
+  switches:
+    hyperion_service:
+      command_on: "ssh homeassistant@omc.local 'sudo systemctl start hyperion.service'"
+      command_off: "ssh homeassistant@omc.local 'sudo systemctl stop hyperion.service'"
+      # command_state: "/usr/bin/curl -X GET http://192.168.1.10/digital/4"
+      # value_template: '{{ value == "1" }}'
+      friendly_name: Hyperion Service

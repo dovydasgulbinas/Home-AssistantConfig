@@ -1,16 +1,3 @@
-- id: led_strip
-  alias: TV Backlight
-  initial_state: true
-  hide_entity: false
-  trigger:
-  - platform: state
-    entity_id: input_slider.porch_animation_speed
-  action:
-  - service: mqtt.publish
-    data_template:
-      topic: bruh/porch/set
-      payload: '{"transition":{{ trigger.to_state.state | int }}}'
-
 - id: weekday_alarm
   alias: Week day alarm automation
   trigger:
@@ -18,6 +5,9 @@
     platform: time
     seconds: 0
   condition:
+  - condition: state
+    entity_id: input_boolean.alarmweekon
+    state: 'on'
   - condition: state
     entity_id: input_boolean.alarmweekday
     state: 'on'
@@ -46,6 +36,9 @@
   - condition: state
     entity_id: input_boolean.alarmweekon
     state: 'on'
+  - condition: state
+    entity_id: input_boolean.alarmweekday
+    state: 'off'
   - condition: time
     weekday:
     - sat
@@ -69,9 +62,9 @@
     entity_id: device_tracker.hermesmobile
     state: home
   action:
-    service: homeassistant.turn_on
-    entity_id: light.my_light
-
+    - service: scene.turn_on
+      data:
+        entity_id: scene.room_normal_slow
 
 - id: media_idle_light_on
   alias: "Media player paused/stopped"
@@ -93,6 +86,20 @@
       data:
         entity_id: scene.room_normal
 
+- id: turn_on_hyperion_in_evenings
+  alias: Turn On Hyperion Service On Sunset
+  trigger:
+    platform: sun
+    event: sunset
+    offset: "-00:20:00"
+  condition:
+    condition: state
+    entity_id: device_tracker.hermesmobile
+    state: home
+  action:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.hyperion_service
 
 - id: media_playing_light_off
   alias: "Media player playing"
@@ -113,6 +120,36 @@
     - service: scene.turn_on
       data:
         entity_id: scene.room_dim
+
+# - id: automation_hyperion_effect_run
+#   alias: "Activate Hyperion Effect Automation"
+#   trigger:
+#   - entity_id: input_boolean.activate_hyperion_effect
+#     platform: state
+#     from: 'off'
+#     to: 'on'
+#   action:
+#     - service: script.turn_on
+#       data:
+#         entity_id: script.hyperion_run
+
+
+# - id: light_before_alarm
+#   alias: Turn on the lights before alarm
+#   trigger:
+#   - minutes: /1
+#     platform: time
+#     seconds: 0
+#   condition:
+#   - condition: template
+#     value_template: '{{ now().strftime("%H:%M") == states.sensor.alarm_time.state
+#       }}'
+#   - condition: template
+#     value_template: {{states.input_boolean.alarmweekon.state == "on" or states.input_boolean.alarmweekday.state == "on"}}
+#   action:
+#   - service: scene.turn_on
+#     data:
+#       entity_id: scene.room_morning_alarm_light
 
 
 

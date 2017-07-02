@@ -145,7 +145,7 @@ input_slider:
     step: 5
 
 android_ip_webcam:
-  - host: 192.168.0.107
+  - host: 192.168.0.5
     name: hermes_cam
     port: 8080
     scan_interval: 3
@@ -203,22 +203,26 @@ logger:
   logs:
     homeassistant.components.switch.hdmi: debug
 
-# rss_feed_template:
-#   hass:
-#     requires_api_password: False
-#     title: "Home {{ as_timestamp(now())|timestamp_custom('%H:%m', True) }}"
-#     items:
-#     - title: "Weather"
-#       description: "Home temp: {% if is_state('sensor.pws_relative_humidity','unknown') %}---{% else %}{{states.sensor.home_precise_temperature.state}} °C{% endif %}"
-
 group: !include groups.yaml
 
-# input_select:
-#   lullaby:
-#     name: Lullaby
-#     options:
-#       - Rain
-#       - Babbling Brook
-#       - None
-#     initial: None
-#     icon: mdi:weather-rainy
+# HYPERION
+
+input_select:
+  hyperion_effects:
+    name: Hyperion Effects
+    options:
+     - Rainbow swirl
+     - Rainbow mood
+     - Cinema brighten lights
+     - Cinema dim lights
+     - Knight Rider
+     - Sparks Color
+     - Sparks
+     - Snake
+     - Warm mood blobs
+     - Full color mood blobs
+    initial: Sparks
+    icon: mdi:white-balance-iridescent
+
+shell_command:
+  run_hyperion_effect:  "ssh homeassistant@omc.local \"hyperion-remote -e '{{states.input_select.hyperion_effects.state}}'\" "

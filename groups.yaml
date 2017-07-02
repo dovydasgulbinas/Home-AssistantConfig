@@ -90,3 +90,11 @@ quote:
   name: Fortune
   entities:
   - sensor.quote
+
+hyperion_group:
+  name: Hyperion Control
+  entities:
+    - input_select.hyperion_effects
+    - script.hyperion_run
+    - light.omc
+    - switch.hyperion_service

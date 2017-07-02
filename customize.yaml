@@ -96,3 +96,12 @@ script.good_night:
 
 light.omc:
   friendly_name: Backlight
+
+sensor.hermesmobile_battery_state:
+  hidden: true
+
+sensor.hermesmobile_battery_level:
+  hidden: true
+
+script.hyperion_run:
+  can_cancel: false
