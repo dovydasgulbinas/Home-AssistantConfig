@@ -59,6 +59,16 @@ good_night:
       data:
         entity_id: automation.media_player_playing
 
+    - alias: kill monitor
+        data:
+          entity_id: switch.strip_cord
+        service: switch.turn_off
+
+    - alias: turn off hyperion light
+      service: light.turn_off
+      data:
+        entity_id: light.omc
+
     - alias: Disable hyperion service
       service: switch.turn_off
       data:
@@ -83,10 +93,7 @@ good_night:
         transition: 5
       service: light.turn_off
 
-    - alias: kill monitor
-      data:
-        entity_id: switch.strip_cord
-      service: switch.turn_off
+
 
 leaving_home:
   alias: Leaving home!
@@ -113,6 +120,7 @@ leaving_home:
         entity_id: switch.strip_cord
       service: switch.turn_off
 
+
 welcome_home:
   alias: Back at home!
   sequence:
@@ -120,34 +128,6 @@ welcome_home:
       service: notify.notify
       data:
         message: Welcome back home!
-
-hyperion_run:
-  alias: Run Hyperion Effect
-  sequence:
-    - alias: Run selected effect
-      service: shell_command.run_hyperion_effect
-      # data:
-      #   message: Welcome back home!
-
-# enable_hyperion_effect:
-#   sequence:
-#     - service: notify.pushover
-#       data_template:
-#         title: "{{ title }}"
-#         message: "{{ message }}"
-
-    # - alias: Play rain
-    #   data:
-    #     entity_id: media_player.kodi
-    #     media_content_id: plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=yhx3JIF7bGU
-    #     media_content_type: video
-    #   service: media_player.play_media
-
-    # - alias: volume down kodi
-    #   data:
-    #     entity_id: media_player.kodi
-    #     volume_level: '0.8'
-    #   service: media_player.volume_set
 
     - alias: turn monitor on
       data:
@@ -157,9 +137,22 @@ hyperion_run:
     - delay:
         seconds: 20
 
+    - alias: volume down kodi
+      data:
+        entity_id: media_player.kodi
+        volume_level: '0.8'
+      service: media_player.volume_set
+
     # TODO: Add a question if media should be played
 
     - alias:  Unpause kodi
       service: media_player.media_play
       data:
         entity_id: media_player.kodi
+
+
+hyperion_run:
+  alias: Run Hyperion Effect
+  sequence:
+    - alias: Run selected effect
+      service: shell_command.run_hyperion_effect
