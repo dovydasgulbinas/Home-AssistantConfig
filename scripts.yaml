@@ -60,9 +60,9 @@ good_night:
         entity_id: automation.media_player_playing
 
     - alias: kill monitor
-        data:
-          entity_id: switch.strip_cord
-        service: switch.turn_off
+      data:
+        entity_id: switch.strip_cord
+      service: switch.turn_off
 
     - alias: turn off hyperion light
       service: light.turn_off

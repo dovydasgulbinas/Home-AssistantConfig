@@ -211,26 +211,8 @@ input_select:
   hyperion_effects:
     name: Hyperion Effects
     options: !include hyperion_effect_list.yaml
-    #  - Rainbow swirl
-    #  - Rainbow mood
-    #  - Cinema brighten lights
-    #  - Cinema dim lights
-    #  - Knight Rider
-    #  - Sparks Color
-    #  - Sparks
-    #  - Snake
-    #  - Warm mood blobs
-    #  - Full color mood blobs
-    initial: Sparks
+    initial: Rainbow swirl
     icon: mdi:white-balance-iridescent
 
 shell_command:
   run_hyperion_effect:  "ssh homeassistant@omc.local \"hyperion-remote -e '{{states.input_select.hyperion_effects.state}}'\" "
-
-
-panel_custom:
-  - name: tidly
-    sidebar_title: tidly
-    sidebar_icon: mdi:work
-    url_path: tidly
-    # webcomponent_path: /home/homeassistant/.homeassistant/index.html
