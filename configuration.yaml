@@ -62,7 +62,7 @@ media_player:
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret
   - platform: kodi
-    host: omc.local
+    host: !secret kodi_host
     port: 8080
     turn_off_action: reboot
     # enable_websocket: false
@@ -90,7 +90,7 @@ light:
     qos: 0
 
   - platform: hyperion
-    host: omc.local
+    host: !secret hyperion_host
 
 input_slider:
   alarmhour:
@@ -173,5 +173,6 @@ input_select:
     initial: Rainbow swirl
     icon: mdi:white-balance-iridescent
 
+# TODO: ⚠️ Remove hardcoded ip
 shell_command:
-  run_hyperion_effect:  "ssh homeassistant@omc.local \"hyperion-remote -e '{{states.input_select.hyperion_effects.state}}'\" "
+  run_hyperion_effect:  "ssh homeassistant@192.168.0.103 \"hyperion-remote -e '{{states.input_select.hyperion_effects.state}}'\" "
