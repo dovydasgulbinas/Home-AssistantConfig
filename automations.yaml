@@ -121,6 +121,16 @@
       data:
         entity_id: scene.room_dim
 
+- id: Go wild on state change
+  alias: Reacts to state change
+  trigger:
+    platform: state
+    entity_id: input_select.hyperion_effects
+  action:
+    - service: script.turn_on
+      data:
+        entity_id: script.hyperion_run
+
 # - id: automation_hyperion_effect_run
 #   alias: "Activate Hyperion Effect Automation"
 #   trigger:

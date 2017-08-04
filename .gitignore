@@ -43,3 +43,6 @@ ip_bans.yaml
 /icloud/*
 ios.conf
 config.json
+Home-AssistantConfig/
+old_conf
+google_assistant.json

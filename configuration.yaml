@@ -2,15 +2,14 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
-  latitude: 54.6833
-  longitude: 25.3167
+  latitude: !secret latitude
+  longitude: !secret longitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: 0
+  elevation: !secret elevation
   # metric for Metric, imperial for Imperial
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Vilnius
-  # FIXME: UNCOMMENT
   customize: !include customize.yaml
 
 # Show links to resources in log and frontend
@@ -20,8 +19,7 @@ homeassistant:
 frontend:
 
 # Enables configuration UI
-# FIXME⚠️:
-# automation: !include automations.yaml
+automation: !include automations.yaml
 config:
 
 http:
@@ -40,7 +38,7 @@ ios:
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
 
-# Enables support for tracking state changes over time
+# Enables support for tracking state changes over time.
 history:
 
 # View all events in a logbook
@@ -49,13 +47,131 @@ logbook:
 # Track the sun
 sun:
 
-# Weather prediction
-sensor:
-  - platform: yr
+# Weather Prediction
+sensor: !include sensors.yaml
 
-# Text to speech
 tts:
-  - platform: google
+  platform: google
+
+scene: !include scenes.yaml
+
+script: !include scripts.yaml
+
+media_player:
+  - platform: spotify
+    client_id: !secret spotify_client_id
+    client_secret: !secret spotify_client_secret
+  - platform: kodi
+    host: omc.local
+    port: 8080
+    turn_off_action: reboot
+    # enable_websocket: false
+    # proxy_ssl: false
+    username: !secret kodi_username
+    password: !secret kodi_password
+mqtt:
+  broker: 127.0.0.1
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+light:
+  - platform: mqtt_json
+    name: "My Light"
+    state_topic: "AiLight-B31864"
+    command_topic: "AiLight-B31864/set"
+    effect: false
+    brightness: true
+    color_temp: true
+    flash: true
+    rgb: true
+    white_value: true
+    xy: false
+    optimistic: false
+    qos: 0
+
+  - platform: hyperion
+    host: omc.local
+
+input_slider:
+  alarmhour:
+    name: Hour
+    icon: mdi:timer
+    initial: 7
+    min: 0
+    max: 23
+    step: 1
+  alarmminutes:
+    name: Minutes
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 59
+    step: 5
+
+android_ip_webcam:
+  - host: 192.168.0.5
+    name: hermes_cam
+    port: 8080
+    scan_interval: 3
+    sensors:
+      - light
+      - battery_temp
+      - battery_voltage
+    switches:
+      - video_recording
+      - torch
+      - night_vision
+      - ffc
+
+device_tracker:
+  - platform: nmap_tracker
+    hosts: 192.168.0.1/24
+    home_interval: 10
+    exclude:
+     - 192.168.0.107
+     - 192.168.0.1
+     - 192.168.0.2
+     - 192.168.0.3
+     - 192.168.0.4
+     - 192.168.0.103
+zone:
+  name: Home
+  latitude: !secret latitude
+  longitude: !secret longitude
+  radius: 100
+  icon: mdi:account-multiple
+
+zone 1:
+  name: Work
+  latitude: !secret work_latitude
+  longitude: !secret work_longitude
+  radius: 100
+  icon: mdi:worker
+
+input_boolean: !include input_booleans.yaml
+
+
+weblink:
+  entities:
+    - name: Transmission
+      url: http://omc.local:9091
+    - name: Sonarr
+      url: http://omc.local:8989
+    - name: Kodi
+      url: http://omc.local:8080/
+
+switch: !include switches.yaml
 
 group: !include groups.yaml
-automation: !include automations.yaml
+
+# HYPERION
+
+input_select:
+  hyperion_effects:
+    name: Hyperion Effects
+    options: !include hyperion_effect_list.yaml
+    initial: Rainbow swirl
+    icon: mdi:white-balance-iridescent
+
+shell_command:
+  run_hyperion_effect:  "ssh homeassistant@omc.local \"hyperion-remote -e '{{states.input_select.hyperion_effects.state}}'\" "

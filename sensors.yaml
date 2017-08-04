@@ -90,8 +90,3 @@
       value_template: '{{now().strftime("%H:%M")}}'
 
 # - platform: template
-
-- platform: command_line
-  name: quote
-  command: /usr/games/fortune
-  scan_interval: 3600
