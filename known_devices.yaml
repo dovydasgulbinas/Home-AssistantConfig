@@ -66,3 +66,12 @@ hermes-mac:
   picture:
   track: true
   vendor: HUAWEI TECHNOLOGIES CO.,LTD
+
+f4e3fb12ea2a:
+  hide_if_away: false
+  icon:
+  mac: F4:E3:FB:12:EA:2A
+  name: f4e3fb12ea2a
+  picture:
+  track: true
+  vendor: HUAWEI TECHNOLOGIES CO.,LTD
